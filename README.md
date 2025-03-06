@@ -59,6 +59,13 @@ To view API documentation, visit:
 http://127.0.0.1:8000/docs
 ```
 
+## Test Credentials
+You can use the following test credentials:
+```
+Email: test@example.com
+Password: password
+```
+
 ---
 
 ### 🎉 Your Laravel application with Passport authentication is ready!
