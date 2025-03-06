@@ -1,0 +1,673 @@
+openapi: 3.0.3
+info:
+  title: 'Laravel API Documentation'
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost:8000'
+tags:
+  -
+    name: Attributes
+    description: ''
+  -
+    name: Authentications
+    description: ''
+  -
+    name: Endpoints
+    description: ''
+  -
+    name: Projects
+    description: ''
+  -
+    name: 'Time sheets'
+    description: ''
+components:
+  securitySchemes:
+    default:
+      type: http
+      scheme: bearer
+      description: 'Use a Bearer token obtained from `/api/login`.'
+security:
+  -
+    default: []
+paths:
+  /api/attribute:
+    post:
+      summary: 'Store a newly created attribute in storage.'
+      operationId: storeANewlyCreatedAttributeInStorage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Attributes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: b
+                  nullable: false
+                value:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                type:
+                  type: string
+                  description: ''
+                  example: number
+                  nullable: false
+                  enum:
+                    - text
+                    - date
+                    - number
+                    - select
+                project_id:
+                  type: string
+                  description: 'The <code>id</code> of an existing record in the projects table.'
+                  example: architecto
+                  nullable: false
+              required:
+                - name
+                - value
+                - type
+                - project_id
+  '/api/attribute/{id}':
+    get:
+      summary: 'Display the specified attribute.'
+      operationId: displayTheSpecifiedAttribute
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Attributes
+    put:
+      summary: 'Update the specified attribute in storage.'
+      operationId: updateTheSpecifiedAttributeInStorage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Attributes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: b
+                  nullable: false
+                value:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                type:
+                  type: string
+                  description: ''
+                  example: number
+                  nullable: false
+                  enum:
+                    - text
+                    - date
+                    - number
+                    - select
+                project_id:
+                  type: string
+                  description: 'The <code>id</code> of an existing record in the projects table.'
+                  example: architecto
+                  nullable: false
+              required:
+                - name
+                - value
+                - type
+                - project_id
+    delete:
+      summary: 'Remove the specified resource from storage.'
+      operationId: removeTheSpecifiedResourceFromStorage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Attributes
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the attribute.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  /api/register:
+    post:
+      summary: ''
+      operationId: postApiRegister
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Authentications
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: b
+                  nullable: false
+                last_name:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: 'n'
+                  nullable: false
+                email:
+                  type: string
+                  description: 'Must be a valid email address.'
+                  example: ashly64@example.com
+                  nullable: false
+                password:
+                  type: string
+                  description: ''
+                  example: architecto
+                  nullable: false
+                password_confirmation:
+                  type: string
+                  description: 'Must match the password'
+                  example: architecto
+                  nullable: false
+              required:
+                - first_name
+                - last_name
+                - email
+                - password
+                - password_confirmation
+      security: []
+  /api/login:
+    post:
+      summary: ''
+      operationId: postApiLogin
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Authentications
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 'Must be a valid email address.'
+                  example: gbailey@example.net
+                  nullable: false
+                password:
+                  type: string
+                  description: ''
+                  example: '|]|{+-'
+                  nullable: false
+              required:
+                - email
+                - password
+      security: []
+  /api/logout:
+    post:
+      summary: 'Logout user and revoke token'
+      operationId: logoutUserAndRevokeToken
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Authentications
+  /api/user:
+    get:
+      summary: ''
+      operationId: getApiUser
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+  /api/project:
+    get:
+      summary: 'Display a listing of the projects.'
+      operationId: displayAListingOfTheProjects
+      description: ''
+      parameters:
+        -
+          in: query
+          name: filters
+          description: 'Dynamic key-value filters for any project attribute.'
+          example:
+            status: active
+            priority: high
+          required: false
+          schema:
+            type: array
+            description: 'Dynamic key-value filters for any project attribute.'
+            example:
+              status: active
+              priority: high
+            items:
+              type: string
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Projects
+    post:
+      summary: 'Store a newly created project in storage.'
+      operationId: storeANewlyCreatedProjectInStorage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Projects
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: b
+                  nullable: false
+                status:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: 'n'
+                  nullable: false
+                attributes:
+                  type: array
+                  description: ''
+                  example: null
+                  items:
+                    type: object
+                    properties:
+                      attr:
+                        type: object
+                        description: ''
+                        example: []
+                        nullable: false
+                        properties:
+                          name:
+                            type: string
+                            description: 'Must not be greater than 255 characters.'
+                            example: g
+                            nullable: false
+                          type:
+                            type: string
+                            description: ''
+                            example: number
+                            nullable: false
+                            enum:
+                              - text
+                              - date
+                              - number
+                              - select
+                        required:
+                          - name
+                          - type
+                      value:
+                        type: object
+                        description: ''
+                        example: []
+                        nullable: false
+                        properties:
+                          value:
+                            type: string
+                            description: ''
+                            example: architecto
+                            nullable: false
+                        required:
+                          - value
+              required:
+                - name
+                - status
+  '/api/project/{id}':
+    get:
+      summary: 'Display the specified project.'
+      operationId: displayTheSpecifiedProject
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Projects
+    put:
+      summary: 'Update the specified project in storage.'
+      operationId: updateTheSpecifiedProjectInStorage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Projects
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: b
+                  nullable: false
+                status:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: 'n'
+                  nullable: false
+                attributes:
+                  type: array
+                  description: ''
+                  example: null
+                  items:
+                    type: object
+                    properties:
+                      attr:
+                        type: object
+                        description: ''
+                        example: []
+                        nullable: false
+                        properties:
+                          name:
+                            type: string
+                            description: 'Must not be greater than 255 characters.'
+                            example: g
+                            nullable: false
+                          type:
+                            type: string
+                            description: ''
+                            example: text
+                            nullable: false
+                            enum:
+                              - text
+                              - date
+                              - number
+                              - select
+                        required:
+                          - name
+                          - type
+                      value:
+                        type: object
+                        description: ''
+                        example: []
+                        nullable: false
+                        properties:
+                          value:
+                            type: string
+                            description: ''
+                            example: architecto
+                            nullable: false
+                        required:
+                          - value
+              required:
+                - name
+                - status
+    delete:
+      summary: 'Remove the specified project from storage.'
+      operationId: removeTheSpecifiedProjectFromStorage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Projects
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the project.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  /api/timesheet:
+    get:
+      summary: 'Display a listing of the timesheet.'
+      operationId: displayAListingOfTheTimesheet
+      description: ''
+      parameters:
+        -
+          in: query
+          name: task_name
+          description: 'Filter by task name.'
+          example: architecto
+          required: false
+          schema:
+            type: string
+            description: 'Filter by task name.'
+            example: architecto
+            nullable: false
+        -
+          in: query
+          name: date
+          description: 'Filter by specific date (YYYY-MM-DD).'
+          example: architecto
+          required: false
+          schema:
+            type: string
+            description: 'Filter by specific date (YYYY-MM-DD).'
+            example: architecto
+            nullable: false
+        -
+          in: query
+          name: hours
+          description: 'Filter by number of hours.'
+          example: 16
+          required: false
+          schema:
+            type: integer
+            description: 'Filter by number of hours.'
+            example: 16
+            nullable: false
+        -
+          in: query
+          name: project_id
+          description: 'Filter by project ID.'
+          example: 16
+          required: false
+          schema:
+            type: integer
+            description: 'Filter by project ID.'
+            example: 16
+            nullable: false
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - 'Time sheets'
+    post:
+      summary: 'Store a newly created timesheet in storage.'
+      operationId: storeANewlyCreatedTimesheetInStorage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - 'Time sheets'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                task_name:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: b
+                  nullable: false
+                date:
+                  type: string
+                  description: 'Must be a valid date.'
+                  example: '2025-03-06T16:02:33'
+                  nullable: false
+                hours:
+                  type: number
+                  description: 'Must be at least 0.'
+                  example: 39
+                  nullable: false
+                project_id:
+                  type: string
+                  description: 'The <code>id</code> of an existing record in the projects table.'
+                  example: architecto
+                  nullable: false
+              required:
+                - task_name
+                - date
+                - hours
+                - project_id
+  '/api/timesheet/{id}':
+    get:
+      summary: 'Display the specified timesheet.'
+      operationId: displayTheSpecifiedTimesheet
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - 'Time sheets'
+    put:
+      summary: 'Update the specified timesheet in storage.'
+      operationId: updateTheSpecifiedTimesheetInStorage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - 'Time sheets'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                task_name:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: b
+                  nullable: false
+                date:
+                  type: string
+                  description: 'Must be a valid date.'
+                  example: '2025-03-06T16:02:33'
+                  nullable: false
+                hours:
+                  type: number
+                  description: 'Must be at least 0.'
+                  example: 39
+                  nullable: false
+                project_id:
+                  type: string
+                  description: 'The <code>id</code> of an existing record in the projects table.'
+                  example: architecto
+                  nullable: false
+              required:
+                - task_name
+                - date
+                - hours
+                - project_id
+    delete:
+      summary: 'Remove the specified timesheet from storage.'
+      operationId: removeTheSpecifiedTimesheetFromStorage
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - 'Time sheets'
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the timesheet.'
+        example: 1
+        required: true
+        schema:
+          type: integer
