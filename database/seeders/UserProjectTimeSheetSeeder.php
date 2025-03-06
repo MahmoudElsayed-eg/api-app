@@ -18,8 +18,9 @@ class UserProjectTimeSheetSeeder extends Seeder
 
 
         // Create users
-        $users = User::factory()->count(20)->create();
-
+        $users = User::factory()->count(19)->create()->push(
+            User::factory()->create(['email' => 'test@example.com'])
+        );
         // Create projects
         $projects = Project::factory()->count(10)->create();
 
